@@ -13,6 +13,8 @@ The setup file checks/installs the following dependencies:
 
 1. aircrack-ng
 2. Python 3.5
+3. at
+4. libnotify-bin
 
 ##*Warning!!!*
 Me, my Affiliates and all of this projects Contributers in no way promote or encourage un-lawful hacking and this toolkit should be rightfully used for it's purpose for penetration testing on your own network or any network that you have explicit consent from the Administrator. Me, my Affiliates and any Contributers cannot and will not be held liable for any damage or unlawful action that may occur while using this toolkit. 
