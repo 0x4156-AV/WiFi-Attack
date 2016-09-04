@@ -1,0 +1,16 @@
+#!/bin/bash
+# Script made by Aaron Vigal. http://www.aaronvigal.com
+
+mkdir ~/Desktop/Wireless
+# Download needed files from github
+git clone https://github.com/AaronVigal/WiFi-Attack.git ~/Desktop/Wireless
+# Install dependencies
+sudo apt-get -y install at>/dev/null 
+sudo apt-get -y install libnotify-bin>/dev/null 
+# Make file executable
+sudo chmod +x ~/Desktop/Wireless/WiFi 
+sudo chmod +x ~/Desktop/Wireless/loading10
+sudo chmod +x ~/Desktop/Wireless/loading15
+# Remove setup file
+rm setup
+notify-send "WiFi Attack is done installing :)"
