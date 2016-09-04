@@ -1,0 +1,3 @@
+  526 NetworkManager
+  926 wpa_supplicant
+ 2978 dhclient

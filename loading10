@@ -1,0 +1,20 @@
+#!/bin/bash
+echo -ne '     Progress: [##                  ] (10%)\r'
+sleep 1
+echo -ne '     Progress: [####                ] (20%)\r'
+sleep 1
+echo -ne '     Progress: [######              ] (30%)\r'
+sleep 1
+echo -ne '     Progress: [########            ] (40%)\r'
+sleep 1
+echo -ne '     Progress: [##########          ] (50%)\r'
+sleep 1
+echo -ne '     Progress: [############        ] (60%)\r'
+sleep 1
+echo -ne '     Progress: [##############      ] (70%)\r'
+sleep 1
+echo -ne '     Progress: [################    ] (80%)\r'
+sleep 1
+echo -ne '     Progress: [##################  ] (90%)\r'
+sleep 1
+echo '     Progress: [####################] (100%)'

