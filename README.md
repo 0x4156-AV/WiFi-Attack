@@ -7,6 +7,8 @@ This tool should run under most versions of Linux but is optimized for working o
 wget https://raw.githubusercontent.com/AaronVigal/WiFi-Attack/master/setup
 sudo chmod +x setup
 sudo ./setup 
+cd ~/Desktop/Wireless
+sudo ./WiFi
 ```
 
 The setup file checks/installs the following dependencies:
